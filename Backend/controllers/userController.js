@@ -1,6 +1,12 @@
 import User from "../models/userModel";
 import validator from 'validator'
 import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
+
+const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret_here"
+const TOKEN_EXPIRES = '24';
+
+const createToken = (userId) => jwt.sign({id : userId}, JWT_SECRET, {expiresIn: TOKEN_EXPIRES});
 
 // Register Function
 export async function registerUser(req,res){
@@ -37,3 +43,8 @@ export async function registerUser(req,res){
 
 
 }
+
+
+//LOGIN FUNCTION
+
+export f
