@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken'
 import User from '../models/userModel.js';
 
-const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret_here"
+// const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret_here"
 
 export default async function authMiddleware(req,res,next){
     //  GRAB THE BEARER TOKEN FROM AUTHORIZATION HEADER
@@ -15,7 +15,7 @@ export default async function authMiddleware(req,res,next){
     // VERIFY AND ATTACH USER OBJECT
 
     try {
-        const payload= jwt.verify(token,JWT_SECRET);
+        const payload= jwt.verify(token,process.env.JWT_SECRET);
         const user= await User.findById(payload.id).select('-password');
 
         if(!user){
