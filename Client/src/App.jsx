@@ -4,6 +4,10 @@ import { useState, useEffect } from 'react';
 import Layout from './components/Layout';
 import Login from './components/Login';
 import SignUp from './components/SignUp';
+import { Navigate } from 'react-router-dom';
+import Dashboard from './pages/Dashboard';
+import PendingPage from './pages/PendingPage';
+import CompletePage from './pages/CompletePage';
 
 const App = () => {
   const navigate = useNavigate();
@@ -56,9 +60,15 @@ const App = () => {
         <SignUp onSubmit={handleAuthSubmit} onSwitchMode={() => navigate('/login')} />
       </div>} />
       
+      <Route element={currentUser ? <ProtectedLayout /> :
+        <Navigate to='/login' replace />} >
+        <Route path="/" element={<Dashboard />} />
+        <Route path='/pending' element={<PendingPage />}></Route>
+        <Route path='complete' element={<CompletePage />}></Route>
+      </Route>
       
-
-      <Route path="/" element={<Layout />} />
+      <Route path='*' element={<Navigate to ={currentUser ? '/' : '/login'} replace /> } />
+      
     </Routes>
   );
 }
