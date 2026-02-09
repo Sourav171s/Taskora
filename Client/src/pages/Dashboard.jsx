@@ -191,12 +191,12 @@ const Dashboard = () => {
               </button>
             </div>
           ) : (
-            filteredTasks.map(task => (
+           filteredTasks.map(task => (
               <TaskItem key={task._id || task.id}
-                task={task}
-                onRefresh={refreshTasks}
-                showCompleteCheckbox
-                onEdit={() => { setSelectedTask(task); setShowModal(true) }}
+                 task={task}
+                  onRefresh={refreshTasks}
+                  showCompleteCheckbox
+                  onEdit={() => { setSelectedTask(task); setShowModal(true) }}
               />
             ))
           )}
