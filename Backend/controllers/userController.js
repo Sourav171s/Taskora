@@ -91,6 +91,7 @@ export async function getCurrentUser(req,res){
 
 //Update user profile
 export async function updateProfile(req,res){
+    const {name,email} = req.body;
     if(!name || !email || !validator.isEmail(email)){
         return res.status(400).json({success : false, message : "Valid name and email required"});
     }
@@ -104,7 +105,7 @@ export async function updateProfile(req,res){
 
         const user = await User.findByIdAndUpdate(
             req.user.id,
-            { name, emai },
+            { name, email },
             {new : true, runValidators: true, select : "name email"}
         );
         res.json({success : true, user })
