@@ -25,7 +25,7 @@ export const createTask= async (req,res)=>{
 // GET ALL TASKS FOR LOGGED IN USER
 export const getTasks = async (req,res)=>{
     try {
-        const tasks= await Task.find({owner: req.user.id}).sort({createdAt : -1});
+        const tasks= await Task.find({owner: req.user.id}).sort({createdAt : -1});      //this is row level authorization and -1 means descending order i.e newer first
         res.json({success : true, tasks});
     } catch (error) {
         res.status(500).json({success : false ,message : error.message})
@@ -61,7 +61,7 @@ export const updateTask = async (req,res)=>{
         const updated= await Task.findOneAndUpdate(
             {_id :req.params.id, owner : req.user.id},
             data,
-            {new : true, runValidators: true}
+            {new : true, runValidators: true}               //Schema rules still apply during update ,      Without this → invalid priority could be saved
         );
 
         if(!updated){

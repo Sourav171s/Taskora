@@ -77,7 +77,7 @@ export async function loginUser(req, res) {
 
 export async function getCurrentUser(req,res){
     try {
-        const user= await User.findById(req.user.id).select("name email")
+        const user= await User.findById(req.user.id).select("name email")         //means fetch only the name and email field
         if(!user){
             return res.status(400).json({success : false, message : "User not found" })
         }

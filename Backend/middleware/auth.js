@@ -10,7 +10,7 @@ export default async function authMiddleware(req,res,next){
         return res.status(401).json({success: false, message: "Not Authorized, token missing"})
     }
 
-    const token = authHeader.split(' ')[1];
+    const token = authHeader.split(' ')[1];           //this removes bearer and gives only the token present after it
     
     // VERIFY AND ATTACH USER OBJECT
 
@@ -22,6 +22,7 @@ export default async function authMiddleware(req,res,next){
             return res.status(401).json({success: false, message: "User not found"});
         }
 
+        //after fetching of user we attach it with the request
         req.user= user;
         next();
 

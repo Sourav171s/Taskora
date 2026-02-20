@@ -18,5 +18,5 @@ const userSchema= new mongoose.Schema({
 
 })
 
-const userModel = mongoose.models.user || mongoose.model("user",userSchema);
+const userModel = mongoose.models.user || mongoose.model("user",userSchema);       //mongoose.models.user is used so when we use nodemon then after every reload it doesn't give error that the user model already exists but use the existing user model
 export default userModel;

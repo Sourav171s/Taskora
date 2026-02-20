@@ -9,15 +9,17 @@ import Dashboard from './pages/Dashboard';
 import PendingPage from './pages/PendingPage';
 import CompletePage from './pages/CompletePage';
 import Profile from './components/Profile';
+ 
 
 const App = () => {
   const navigate = useNavigate();
   const [currentUser, setCurrentUser] = useState(() => {
     const stored = localStorage.getItem('currentUser');
-    return stored ? JSON.parse(stored) : null;
+    return stored ? JSON.parse(stored) : null;              //json.parse is used to convert back the string object stored in localstorage to javascript object
   });
 
   // Save user to localStorage
+  // Whenever login/logout happens → save/remove user.
   useEffect(() => {
     if (currentUser) {
       localStorage.setItem("currentUser", JSON.stringify(currentUser));
@@ -46,12 +48,12 @@ const App = () => {
   const ProtectedLayout = () => {
     return (
       <Layout user={currentUser} onLogout={handleLogout}>
-        <Outlet />
+        <Outlet />             
       </Layout>
     )
   }
 
-  return (
+  return (  
     <Routes>
       <Route path='/login' element={<div className='fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center'>
         <Login onSubmit={handleAuthSubmit} onSwitchMode={() => navigate('/signup')} />
@@ -69,7 +71,7 @@ const App = () => {
         <Route path='/profile' element={<Profile user={currentUser} setCurrentUser={setCurrentUser} onLogout={handleLogout} />} />
       </Route>
       
-      <Route path='*' element={<Navigate to ={currentUser ? '/' : '/login'} replace /> } />
+      <Route path='*' element={<Navigate to ={currentUser ? '/' : '/login'} replace /> } />     
       
     </Routes>
   );
