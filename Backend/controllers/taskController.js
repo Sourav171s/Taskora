@@ -3,13 +3,15 @@ import Task from "../models/taskModel.js";
 // CREATE A NEW TASK
 export const createTask= async (req,res)=>{
     try {
-        const {title,description , priority, dueDate, completed} = req.body;
+        const {title, description, priority, dueDate, completed, estimatedMinutes, focusedMinutes, lastWorked, project, type, url, repeats, nextReview, scheduled, order, startTime} = req.body;
         const task= new Task({
             title,
             description,
             priority,
             dueDate,
             completed : completed === 'Yes' || completed === true ,
+            estimatedMinutes, focusedMinutes, lastWorked, project, type, url, repeats, nextReview, scheduled,
+            order, startTime,
             owner : req.user.id
         });
 

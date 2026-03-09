@@ -1,0 +1,26 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Environment variables (NEVER push secrets)
+.env
+.env.local
+.env.production
+
+# Build output
+dist/
+build/
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.log
+
+# Uploads
+Backend/Backend/uploads/*
+!Backend/Backend/uploads/.gitkeep
+
+# Misc
+.antigravityignore

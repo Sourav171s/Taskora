@@ -11,8 +11,8 @@ const taskSchema= new mongoose.Schema({
     },
     priority : {
         type : String, 
-        enum : ['Low','Medium','High'],
-        default : 'Low'
+        enum : ['critical','high','medium','low'],
+        default : 'medium'
     },
     dueDate : {
         type: Date
@@ -22,10 +22,21 @@ const taskSchema= new mongoose.Schema({
         ref: 'User',
         required : true
     },
+    estimatedMinutes: { type: Number, default: 25 },
+    focusedMinutes: { type: Number, default: 0 },
+    lastWorked: { type: String, default: 'Never' },
+    project: { type: String },
+    type: { type: String, default: 'normal' },
+    url: { type: String },
+    repeats: { type: Boolean, default: false },
+    nextReview: { type: String },
+    scheduled: { type: Boolean, default: false },
     completed : {
         type : Boolean,
         default : false
     },
+    order: { type: Number, default: 0 },
+    startTime: { type: String },
     createdAt: {
         type : Date,
         default : Date.now
