@@ -21,6 +21,7 @@ Thumbs.db
 # Uploads
 Backend/Backend/uploads/*
 !Backend/Backend/uploads/.gitkeep
+Backend/.env
 
 # Misc
 .antigravityignore
