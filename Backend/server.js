@@ -54,7 +54,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // ── DB ────────────────────────────────────────────────────────────────────────
-connectDB();
+await connectDB();
 
 // ── CRON JOBS ─────────────────────────────────────────────────────────────────
 scheduleNightlyEmail();
