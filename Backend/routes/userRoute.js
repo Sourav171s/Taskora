@@ -26,10 +26,17 @@ userRouter.get(
 
 userRouter.get(
   '/auth/google/callback',
-  passport.authenticate('google', { session: false, failureRedirect: 'http://localhost:5173?error=google_failed' }),
+  (req, res, next) => {
+    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+    passport.authenticate('google', { 
+      session: false, 
+      failureRedirect: `${frontendUrl}?error=google_failed` 
+    })(req, res, next);
+  },
   (req, res) => {
     const token = createToken(req.user._id);
-    res.redirect(`http://localhost:5173?token=${token}`);
+    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+    res.redirect(`${frontendUrl}?token=${token}`);
   }
 );
 

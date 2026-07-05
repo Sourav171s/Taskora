@@ -18,6 +18,7 @@ export interface Task {
   scheduled?: boolean;
   order?: number;
   startTime?: string;
+  completedAt?: string;
 }
 
 interface TaskContextType {

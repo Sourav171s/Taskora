@@ -23,13 +23,26 @@ import { scheduleNightlyEmail } from './utils/nightlySummary.js';
 const app = express()
 const port = process.env.PORT || 4000;
 
+if (process.env.NODE_ENV === 'production') {
+    app.set('trust proxy', 1);
+}
+
 // ── CORS ──────────────────────────────────────────────────────────────────────
-const allowedOrigins = process.env.FRONTEND_URL
-    ? [process.env.FRONTEND_URL, 'http://localhost:3000']
-    : ['http://localhost:5173', 'http://localhost:3000'];
+const allowedOrigins = [
+    process.env.FRONTEND_URL,
+    'http://localhost:5173',
+    'http://localhost:3000',
+    'http://localhost:4000',
+].filter(Boolean);
 
 app.use(cors({
-    origin: allowedOrigins,
+    origin: (origin, callback) => {
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.indexOf(origin) !== -1 || origin.endsWith('.vercel.app')) {
+            return callback(null, true);
+        }
+        return callback(new Error('Not allowed by CORS'), false);
+    },
     credentials: true,
 }));
 
@@ -45,7 +58,11 @@ app.use(session({
     secret: process.env.JWT_SECRET || 'session_secret',
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: false },
+    cookie: { 
+        secure: process.env.NODE_ENV === 'production',
+        httpOnly: true,
+        sameSite: 'lax'
+    },
 }));
 
 // ── PASSPORT ──────────────────────────────────────────────────────────────────
@@ -77,6 +94,10 @@ app.use("/api/payment", paymentRouter);
 app.get('/', (req, res) => {
     res.json({ message: 'Taskora API working ✅', version: '1.0.0' });
 })
+
+app.use((req, res, next) => {
+    res.status(404).json({ success: false, message: `Route ${req.originalUrl} not found` });
+});
 
 app.use((err, req, res, next) => {
     console.error("Internal Error:", err);

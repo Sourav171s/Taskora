@@ -147,8 +147,12 @@ async function sendNightlySummaryToAllUsers() {
             try {
                 // Fetch all tasks for this user
                 const allTasks = await Task.find({ owner: user._id });
-                const completedTasks = allTasks.filter(t => t.completed);
-                const pendingTasks = allTasks.filter(t => !t.completed);
+                const completedTasks = allTasks.filter(t => {
+                    if (!t.completed) return false;
+                    if (!t.completedAt) return false;
+                    return t.completedAt >= startOfDay && t.completedAt < endOfDay;
+                });
+                const pendingTasks = allTasks.filter(t => !t.completed && t.scheduled);
 
                 // Fetch today's focus sessions for this user
                 const todaySessions = await FocusSession.find({
@@ -159,8 +163,9 @@ async function sendNightlySummaryToAllUsers() {
                 const completedTaskMinutes = completedTasks.reduce((sum, t) => sum + (t.estimatedMinutes || 0), 0);
                 const focusedMinutes = sessionMinutes + completedTaskMinutes;
 
-                // Total estimated minutes from ALL tasks (the daily goal)
-                const totalEstimatedMinutes = allTasks.reduce((sum, t) => sum + (t.estimatedMinutes || 0), 0);
+                // Total estimated minutes is today's scheduled tasks + completed tasks today
+                const todayTasks = allTasks.filter(t => t.scheduled || (t.completed && t.completedAt && t.completedAt >= startOfDay && t.completedAt < endOfDay));
+                const totalEstimatedMinutes = todayTasks.reduce((sum, t) => sum + (t.estimatedMinutes || 0), 0);
 
                 const html = buildEmailHTML(
                     user.name.split(' ')[0],
@@ -221,8 +226,12 @@ export async function sendNightlySummaryToUser(userId) {
         const dateStr = now.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
 
         const allTasks = await Task.find({ owner: user._id });
-        const completedTasks = allTasks.filter(t => t.completed);
-        const pendingTasks = allTasks.filter(t => !t.completed);
+        const completedTasks = allTasks.filter(t => {
+            if (!t.completed) return false;
+            if (!t.completedAt) return false;
+            return t.completedAt >= startOfDay && t.completedAt < endOfDay;
+        });
+        const pendingTasks = allTasks.filter(t => !t.completed && t.scheduled);
 
         const todaySessions = await FocusSession.find({
             userId: user._id,
@@ -231,7 +240,10 @@ export async function sendNightlySummaryToUser(userId) {
         const sessionMinutes = todaySessions.reduce((sum, s) => sum + (s.duration || 0), 0);
         const completedTaskMinutes = completedTasks.reduce((sum, t) => sum + (t.estimatedMinutes || 0), 0);
         const focusedMinutes = sessionMinutes + completedTaskMinutes;
-        const totalEstimatedMinutes = allTasks.reduce((sum, t) => sum + (t.estimatedMinutes || 0), 0);
+        
+        // Total estimated minutes is today's scheduled tasks + completed tasks today
+        const todayTasks = allTasks.filter(t => t.scheduled || (t.completed && t.completedAt && t.completedAt >= startOfDay && t.completedAt < endOfDay));
+        const totalEstimatedMinutes = todayTasks.reduce((sum, t) => sum + (t.estimatedMinutes || 0), 0);
 
         const html = buildEmailHTML(
             user.name.split(' ')[0],

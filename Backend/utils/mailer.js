@@ -11,7 +11,7 @@ function createTransporter() {
             pass: process.env.EMAIL_PASS,
         },
         tls: {
-            rejectUnauthorized: false,
+            rejectUnauthorized: process.env.NODE_ENV === 'production',
         },
         connectionTimeout: 10000,
         greetingTimeout: 10000,

@@ -1,0 +1,216 @@
+Taskora
+├── .github
+│   └── appmod
+│       └── appcat
+├── Backend
+│   ├── config
+│   │   ├── db.js
+│   │   └── passport.js
+│   ├── controllers
+│   │   ├── agentController.js
+│   │   ├── analyticsController.js
+│   │   ├── financeController.js
+│   │   ├── flashcardController.js
+│   │   ├── focusController.js
+│   │   ├── habitController.js
+│   │   ├── journalController.js
+│   │   ├── libraryController.js
+│   │   ├── paymentController.js
+│   │   ├── projectController.js
+│   │   ├── subscriptionController.js
+│   │   ├── taskController.js
+│   │   └── userController.js
+│   ├── middleware
+│   │   └── auth.js
+│   ├── models
+│   │   ├── agentMemoryModel.js
+│   │   ├── collegeScheduleModel.js
+│   │   ├── financeModel.js
+│   │   ├── flashcardModel.js
+│   │   ├── focusSessionModel.js
+│   │   ├── habitModel.js
+│   │   ├── journalModel.js
+│   │   ├── koraConversationModel.js
+│   │   ├── libraryModel.js
+│   │   ├── projectModel.js
+│   │   ├── subscriptionModel.js
+│   │   ├── taskModel.js
+│   │   └── userModel.js
+│   ├── routes
+│   │   ├── agentRoutes.js
+│   │   ├── analyticsRoute.js
+│   │   ├── financeRoutes.js
+│   │   ├── flashcardRoutes.js
+│   │   ├── focusRoute.js
+│   │   ├── habitRoutes.js
+│   │   ├── journalRoutes.js
+│   │   ├── libraryRoutes.js
+│   │   ├── paymentRoutes.js
+│   │   ├── projectRoutes.js
+│   │   ├── subscriptionRoute.js
+│   │   ├── taskRoute.js
+│   │   └── userRoute.js
+│   ├── uploads
+│   │   └── avatars
+│   ├── utils
+│   │   ├── mailer.js
+│   │   └── nightlySummary.js
+│   ├── .env
+│   ├── .env.example
+│   ├── package-lock.json
+│   ├── package.json
+│   └── server.js
+├── Client
+│   ├── guidelines
+│   │   └── Guidelines.md
+│   ├── public
+│   │   └── sounds
+│   │       ├── achievement.mp3
+│   │       ├── cafe.mp3
+│   │       ├── fire.mp3
+│   │       ├── focus.mp3
+│   │       ├── forest.mp3
+│   │       ├── ocean.mp3
+│   │       ├── rain.mp3
+│   │       ├── reminder.mp3
+│   │       ├── storm.mp3
+│   │       ├── system.mp3
+│   │       ├── task.mp3
+│   │       ├── underwater.mp3
+│   │       └── whitenoise.mp3
+│   ├── src
+│   │   ├── app
+│   │   │   ├── components
+│   │   │   │   ├── figma
+│   │   │   │   │   └── ImageWithFallback.tsx
+│   │   │   │   ├── focus
+│   │   │   │   │   ├── AmbienceWidget.tsx
+│   │   │   │   │   ├── BookmarksWidget.tsx
+│   │   │   │   │   ├── BreatheWidget.tsx
+│   │   │   │   │   ├── CalculatorWidget.tsx
+│   │   │   │   │   ├── CalendarWidget.tsx
+│   │   │   │   │   ├── ClockWidget.tsx
+│   │   │   │   │   ├── DictionaryWidget.tsx
+│   │   │   │   │   ├── DraggableWidget.tsx
+│   │   │   │   │   ├── MusicWidget.tsx
+│   │   │   │   │   ├── NotesWidget.tsx
+│   │   │   │   │   ├── QuoteWidget.tsx
+│   │   │   │   │   ├── StatsWidget.tsx
+│   │   │   │   │   ├── StopwatchWidget.tsx
+│   │   │   │   │   ├── TimerWidget.tsx
+│   │   │   │   │   ├── TodoWidget.tsx
+│   │   │   │   │   ├── WaterWidget.tsx
+│   │   │   │   │   └── WhiteboardWidget.tsx
+│   │   │   │   ├── layout
+│   │   │   │   │   ├── CoffeeModal.tsx
+│   │   │   │   │   ├── RootLayout.tsx
+│   │   │   │   │   ├── Sidebar.tsx
+│   │   │   │   │   └── TopBar.tsx
+│   │   │   │   ├── ui
+│   │   │   │   │   ├── accordion.tsx
+│   │   │   │   │   ├── alert-dialog.tsx
+│   │   │   │   │   ├── alert.tsx
+│   │   │   │   │   ├── aspect-ratio.tsx
+│   │   │   │   │   ├── avatar.tsx
+│   │   │   │   │   ├── badge.tsx
+│   │   │   │   │   ├── breadcrumb.tsx
+│   │   │   │   │   ├── button.tsx
+│   │   │   │   │   ├── calendar.tsx
+│   │   │   │   │   ├── card.tsx
+│   │   │   │   │   ├── carousel.tsx
+│   │   │   │   │   ├── chart.tsx
+│   │   │   │   │   ├── checkbox.tsx
+│   │   │   │   │   ├── collapsible.tsx
+│   │   │   │   │   ├── command.tsx
+│   │   │   │   │   ├── context-menu.tsx
+│   │   │   │   │   ├── dialog.tsx
+│   │   │   │   │   ├── drawer.tsx
+│   │   │   │   │   ├── dropdown-menu.tsx
+│   │   │   │   │   ├── form.tsx
+│   │   │   │   │   ├── hover-card.tsx
+│   │   │   │   │   ├── input-otp.tsx
+│   │   │   │   │   ├── input.tsx
+│   │   │   │   │   ├── label.tsx
+│   │   │   │   │   ├── LoadingScreen.tsx
+│   │   │   │   │   ├── menubar.tsx
+│   │   │   │   │   ├── navigation-menu.tsx
+│   │   │   │   │   ├── pagination.tsx
+│   │   │   │   │   ├── popover.tsx
+│   │   │   │   │   ├── progress.tsx
+│   │   │   │   │   ├── radio-group.tsx
+│   │   │   │   │   ├── resizable.tsx
+│   │   │   │   │   ├── scroll-area.tsx
+│   │   │   │   │   ├── select.tsx
+│   │   │   │   │   ├── separator.tsx
+│   │   │   │   │   ├── sheet.tsx
+│   │   │   │   │   ├── sidebar.tsx
+│   │   │   │   │   ├── skeleton.tsx
+│   │   │   │   │   ├── slider.tsx
+│   │   │   │   │   ├── sonner.tsx
+│   │   │   │   │   ├── switch.tsx
+│   │   │   │   │   ├── table.tsx
+│   │   │   │   │   ├── tabs.tsx
+│   │   │   │   │   ├── textarea.tsx
+│   │   │   │   │   ├── toggle-group.tsx
+│   │   │   │   │   ├── toggle.tsx
+│   │   │   │   │   ├── tooltip.tsx
+│   │   │   │   │   ├── use-mobile.ts
+│   │   │   │   │   └── utils.ts
+│   │   │   │   └── TaskoraAgent.tsx
+│   │   │   ├── context
+│   │   │   │   ├── AuthContext.tsx
+│   │   │   │   ├── HabitContext.tsx
+│   │   │   │   ├── NotificationContext.tsx
+│   │   │   │   ├── SettingsContext.tsx
+│   │   │   │   └── TaskContext.tsx
+│   │   │   ├── data
+│   │   │   │   └── mock-data.ts
+│   │   │   ├── pages
+│   │   │   │   ├── AuthPage.tsx
+│   │   │   │   ├── DailyPlanning.tsx
+│   │   │   │   ├── Dashboard.tsx
+│   │   │   │   ├── Finance.tsx
+│   │   │   │   ├── Flashcards.tsx
+│   │   │   │   ├── FocusMode.tsx
+│   │   │   │   ├── Habits.tsx
+│   │   │   │   ├── Insights.tsx
+│   │   │   │   ├── Journal.tsx
+│   │   │   │   ├── KoraHub.tsx
+│   │   │   │   ├── Library.tsx
+│   │   │   │   ├── Pricing.tsx
+│   │   │   │   ├── Profile.tsx
+│   │   │   │   ├── Projects.tsx
+│   │   │   │   └── Tasks.tsx
+│   │   │   ├── App.tsx
+│   │   │   └── routes.tsx
+│   │   ├── components
+│   │   │   └── ui
+│   │   │       ├── ai-input.tsx
+│   │   │       └── button.tsx
+│   │   ├── imports
+│   │   │   ├── taskora-refactor-plan.md
+│   │   │   ├── taskora-refinement.md
+│   │   │   └── ts-to-jsx-conversion.md
+│   │   ├── lib
+│   │   │   ├── api.ts
+│   │   │   └── utils.ts
+│   │   ├── styles
+│   │   │   ├── focus-theme.css
+│   │   │   ├── fonts.css
+│   │   │   ├── index.css
+│   │   │   ├── tailwind.css
+│   │   │   └── theme.css
+│   │   └── main.tsx
+│   ├── ATTRIBUTIONS.md
+│   ├── index.html
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── postcss.config.mjs
+│   ├── README.md
+│   ├── tsconfig.json
+│   └── vite.config.ts
+├── .gitignore
+├── generate_tree.js
+├── npm_err.txt
+├── npm_out.txt
+└── README.md

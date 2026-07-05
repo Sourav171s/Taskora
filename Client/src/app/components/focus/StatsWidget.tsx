@@ -2,7 +2,7 @@ import { Flame, Target, Clock, TrendingUp, Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 
-const API = "http://localhost:4000/api";
+const API = import.meta.env.VITE_API_BASE_URL || "http://localhost:4000/api";
 
 function Sparkline({ data }: { data: number[] }) {
   const width = 200;

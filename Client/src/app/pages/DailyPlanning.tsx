@@ -27,7 +27,7 @@ export function DailyPlanning() {
 
   useEffect(() => {
     if (!token) return;
-    fetch("http://localhost:4000/api/agent/schedule", { headers: { Authorization: `Bearer ${token}` } })
+    fetch(`${import.meta.env.VITE_API_BASE_URL || "http://localhost:4000/api"}/agent/schedule`, { headers: { Authorization: `Bearer ${token}` } })
       .then(r => r.json())
       .then(d => {
         if (d.success && d.schedule) setCollegeSchedule(d.schedule.weeklySchedule);

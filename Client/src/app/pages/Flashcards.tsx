@@ -16,7 +16,7 @@ interface Deck {
   cards: Flashcard[];
 }
 
-const API = "http://localhost:4000/api/flashcards";
+const API = (import.meta.env.VITE_API_BASE_URL || "http://localhost:4000/api") + "/flashcards";
 
 export function Flashcards() {
   const { token } = useAuth();

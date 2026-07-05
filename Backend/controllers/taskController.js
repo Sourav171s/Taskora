@@ -4,12 +4,14 @@ import Task from "../models/taskModel.js";
 export const createTask= async (req,res)=>{
     try {
         const {title, description, priority, dueDate, completed, estimatedMinutes, focusedMinutes, lastWorked, project, type, url, repeats, nextReview, scheduled, order, startTime} = req.body;
+        const isCompleted = completed === 'Yes' || completed === true;
         const task= new Task({
             title,
             description,
             priority,
             dueDate,
-            completed : completed === 'Yes' || completed === true ,
+            completed : isCompleted,
+            completedAt: isCompleted ? new Date() : undefined,
             estimatedMinutes, focusedMinutes, lastWorked, project, type, url, repeats, nextReview, scheduled,
             order, startTime,
             owner : req.user.id
@@ -58,6 +60,11 @@ export const updateTask = async (req,res)=>{
         const data= {...req.body};
         if(data.completed !== undefined){
             data.completed = data.completed === 'Yes' || data.completed === true;
+            if (data.completed) {
+                data.completedAt = new Date();
+            } else {
+                data.completedAt = null;
+            }
         }
 
         const updated= await Task.findOneAndUpdate(

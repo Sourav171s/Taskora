@@ -7,7 +7,7 @@ interface CoffeeModalProps {
   onClose: () => void;
 }
 
-const API = "http://localhost:4000/api/payment";
+const API = (import.meta.env.VITE_API_BASE_URL || "http://localhost:4000/api") + "/payment";
 
 export function CoffeeModal({ isOpen, onClose }: CoffeeModalProps) {
   const { token } = useAuth();

@@ -1,4 +1,4 @@
-import { NavLink } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 import { useState } from "react";
 import {
   LayoutDashboard,
@@ -47,7 +47,9 @@ const bottomNavItems = [
 
 export function Sidebar() {
   const { user, logout } = useAuth();
+  const navigate = useNavigate();
   const [isCoffeeModalOpen, setIsCoffeeModalOpen] = useState(false);
+  const [showUserMenu, setShowUserMenu] = useState(false);
 
   const initials = user?.name
     ? user.name.split(" ").map((p) => p[0]).join("").slice(0, 2).toUpperCase()
@@ -152,23 +154,47 @@ export function Sidebar() {
       </div>
 
       {/* Bottom section — user */}
-      <div className="px-3 py-3 border-t border-sidebar-border">
-        <div className="flex items-center gap-2.5 w-full rounded-md py-1">
+      <div className="px-3 py-3 border-t border-sidebar-border relative">
+        {showUserMenu && (
+          <div 
+            className="absolute bottom-full left-3 right-3 mb-1 bg-popover border border-border rounded-lg shadow-lg overflow-hidden py-1 z-50 animate-in fade-in slide-in-from-bottom-2 duration-150"
+            style={{ backgroundColor: "var(--card)" }}
+          >
+            <button
+              onClick={() => { navigate("/pricing"); setShowUserMenu(false); }}
+              className="flex items-center gap-2 px-3 py-2 w-full text-left hover:bg-secondary/60 text-foreground transition-colors text-xs"
+            >
+              <CreditCard className="w-3.5 h-3.5 text-muted-foreground" />
+              Pricing
+            </button>
+            <button
+              onClick={() => { navigate("/profile"); setShowUserMenu(false); }}
+              className="flex items-center gap-2 px-3 py-2 w-full text-left hover:bg-secondary/60 text-foreground transition-colors text-xs"
+            >
+              <User className="w-3.5 h-3.5 text-muted-foreground" />
+              Profile
+            </button>
+            <button
+              onClick={() => { logout(); setShowUserMenu(false); }}
+              className="flex items-center gap-2 px-3 py-2 w-full text-left hover:bg-secondary/60 text-destructive transition-colors text-xs border-t border-border"
+            >
+              <LogOut className="w-3.5 h-3.5" />
+              Logout
+            </button>
+          </div>
+        )}
+        <button
+          onClick={() => setShowUserMenu(!showUserMenu)}
+          className="flex items-center gap-2.5 w-full rounded-md py-1 px-1.5 hover:bg-sidebar-accent/30 transition-colors text-left"
+        >
           <div className="w-7 h-7 rounded-full bg-primary/20 flex items-center justify-center shrink-0">
             <span className="text-primary" style={{ fontSize: 11, fontWeight: 600 }}>{initials}</span>
           </div>
-          <div className="min-w-0 flex-1 text-left">
+          <div className="min-w-0 flex-1">
             <p className="text-foreground truncate" style={{ fontSize: 12, fontWeight: 500 }}>{user?.name || "User"}</p>
             <p className="text-muted-foreground truncate" style={{ fontSize: 11 }}>Pro Plan</p>
           </div>
-          <button
-            onClick={logout}
-            className="p-1 rounded hover:bg-sidebar-accent/50 transition-colors"
-            title="Logout"
-          >
-            <LogOut className="w-3.5 h-3.5 text-muted-foreground" style={{ strokeWidth: 1.5 }} />
-          </button>
-        </div>
+        </button>
       </div>
 
       <CoffeeModal isOpen={isCoffeeModalOpen} onClose={() => setIsCoffeeModalOpen(false)} />

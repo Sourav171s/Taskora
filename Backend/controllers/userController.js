@@ -10,10 +10,13 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const JWT_SECRET = process.env.JWT_SECRET;
 const TOKEN_EXPIRES = '24h';
 
-const createToken = (userId) => jwt.sign({ id: userId }, JWT_SECRET, { expiresIn: TOKEN_EXPIRES });
+const createToken = (userId) => jwt.sign(
+  { id: userId }, 
+  process.env.JWT_SECRET || 'fallback_secret_taskora', 
+  { expiresIn: TOKEN_EXPIRES }
+);
 
 // ── Avatar upload setup ──────────────────────────────────────────────────────
 const uploadDir = path.join(__dirname, '..', 'uploads', 'avatars');
@@ -76,7 +79,7 @@ export async function loginUser(req, res) {
   }
   try {
     const user = await User.findOne({ email });
-    if (!user) {
+    if (!user || !user.password) {
       return res.status(401).json({ success: false, message: "Invalid credentials" });
     }
     const match = await bcrypt.compare(password, user.password);
@@ -186,7 +189,7 @@ export async function updateAvatar(req, res) {
 // ── Change Password ──────────────────────────────────────────────────────────
 export async function updatePassword(req, res) {
   const { currentPassword, newPassword } = req.body;
-  if (!currentPassword || !newPassword || newPassword.length < 8) {
+  if (!newPassword || newPassword.length < 8) {
     return res.status(400).json({ success: false, message: "Password invalid or too short" });
   }
 
@@ -195,9 +198,14 @@ export async function updatePassword(req, res) {
     if (!user) {
       return res.status(404).json({ success: false, message: "User not found" });
     }
-    const match = await bcrypt.compare(currentPassword, user.password);
-    if (!match) {
-      return res.status(401).json({ success: false, message: "Current password incorrect" });
+    if (user.password) {
+      if (!currentPassword) {
+        return res.status(400).json({ success: false, message: "Current password is required" });
+      }
+      const match = await bcrypt.compare(currentPassword, user.password);
+      if (!match) {
+        return res.status(401).json({ success: false, message: "Current password incorrect" });
+      }
     }
     user.password = await bcrypt.hash(newPassword, 10);
     await user.save();

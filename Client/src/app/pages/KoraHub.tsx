@@ -8,7 +8,7 @@ import {
   Pin, Edit3, RotateCcw
 } from "lucide-react";
 
-const API = "http://localhost:4000/api/agent";
+const API = (import.meta.env.VITE_API_BASE_URL || "http://localhost:4000/api") + "/agent";
 
 // ── Types ──
 interface Message {

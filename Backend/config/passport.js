@@ -1,9 +1,6 @@
 import passport from 'passport';
 import User from '../models/userModel.js';
 import jwt from 'jsonwebtoken';
-
-const JWT_SECRET = process.env.JWT_SECRET;
-
 export async function setupPassport() {
   // Only set up Google OAuth if credentials are configured
   const clientID = process.env.GOOGLE_CLIENT_ID;
@@ -72,5 +69,5 @@ export async function setupPassport() {
 }
 
 export function createToken(userId) {
-  return jwt.sign({ id: userId }, JWT_SECRET, { expiresIn: '7d' });
+  return jwt.sign({ id: userId }, process.env.JWT_SECRET || 'fallback_secret_taskora', { expiresIn: '7d' });
 }

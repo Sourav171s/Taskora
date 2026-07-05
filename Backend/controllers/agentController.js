@@ -627,7 +627,7 @@ async function tryGemini(message, userId, user) {
         tools,
       });
 
-      const chat = model.startChat({ history });
+      const chat = model.startChat({ history: history.slice(0, -1) });
       let response = await chat.sendMessage(message);
       let aggregatedAction = null;
 

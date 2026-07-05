@@ -254,9 +254,11 @@ export function Dashboard() {
   };
 
   // Focus target calculations
-  const focusGoalMinutes = allTasks.reduce((total: number, task: any) => total + (task.estimatedMinutes || 0), 0) || 300;
-  const completedTaskMinutes = allTasks.filter((t: any) => t.completed).reduce((total: number, task: any) => total + (task.estimatedMinutes || 0), 0);
-  const totalProgressMinutes = focusedMinutes + completedTaskMinutes;
+  const todayStr = new Date().toISOString().slice(0, 10);
+  const todayTasks = allTasks.filter((t: any) => t.scheduled || (t.completed && t.completedAt && t.completedAt.slice(0, 10) === todayStr));
+  const focusGoalMinutes = todayTasks.reduce((total: number, task: any) => total + (task.estimatedMinutes || 0), 0) || 300;
+  const completedTodayMinutes = todayTasks.filter((t: any) => t.completed).reduce((total: number, task: any) => total + (task.estimatedMinutes || 0), 0);
+  const totalProgressMinutes = focusedMinutes + completedTodayMinutes;
 
   const focusProgress = Math.min((totalProgressMinutes / (focusGoalMinutes || 1)) * 100, 100);
   const fHours = Math.floor(totalProgressMinutes / 60);

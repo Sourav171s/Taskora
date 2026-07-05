@@ -35,6 +35,9 @@ const taskSchema= new mongoose.Schema({
         type : Boolean,
         default : false
     },
+    completedAt : {
+        type : Date
+    },
     order: { type: Number, default: 0 },
     startTime: { type: String },
     createdAt: {

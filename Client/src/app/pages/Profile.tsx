@@ -9,7 +9,8 @@ import {
   Sparkles, Upload, ZoomIn, ZoomOut, RotateCcw,
 } from "lucide-react";
 
-const API = "http://localhost:4000/api";
+const API = import.meta.env.VITE_API_BASE_URL || "http://localhost:4000/api";
+const BACKEND_BASE = API.replace(/\/api$/, "");
 
 // ── Image crop helper ────────────────────────────────────────────────────────
 function getCroppedImg(imageSrc: string, crop: Area): Promise<Blob> {
@@ -76,7 +77,7 @@ export function Profile() {
     : "??";
 
   const avatarUrl = user?.avatar
-    ? user.avatar.startsWith("http") ? user.avatar : `http://localhost:4000${user.avatar}`
+    ? user.avatar.startsWith("http") ? user.avatar : `${BACKEND_BASE}${user.avatar}`
     : null;
 
   // ── Image selection ──

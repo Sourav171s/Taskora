@@ -71,7 +71,7 @@ interface Message {
   time: string
 }
 
-const AGENT_API = "http://localhost:4000/api/agent"
+const AGENT_API = (import.meta.env.VITE_API_BASE_URL || "http://localhost:4000/api") + "/agent"
 const FORM_WIDTH = 420
 const FORM_HEIGHT_CLOSED = 48
 const FORM_HEIGHT_OPEN = 520

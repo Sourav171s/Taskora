@@ -15,7 +15,7 @@ export default async function authMiddleware(req,res,next){
     // VERIFY AND ATTACH USER OBJECT
 
     try {
-        const payload= jwt.verify(token,process.env.JWT_SECRET);
+        const payload= jwt.verify(token, process.env.JWT_SECRET || 'fallback_secret_taskora');
         const user= await User.findById(payload.id).select('-password');
 
         if(!user){
